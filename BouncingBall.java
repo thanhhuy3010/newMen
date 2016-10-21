@@ -21,6 +21,8 @@ import javax.swing.Timer;
  *
  */
 public class BouncingBall extends JFrame {
+
+
 	private static final int WIDTH = 400;
 	private static final int HEIGHT = 400;
 	private static final int UPDATETIME = 5;
@@ -39,7 +41,11 @@ public class BouncingBall extends JFrame {
 	int rightPaddleHeight = 100;
 	//Mouse
 	int mouseX = 0, mouseY =0;
-	
+	//counter
+	int countleft = 0;
+	int countR = 0;	
+
+
 	/**
 	 * Constructor
 	 */
@@ -68,15 +74,26 @@ public class BouncingBall extends JFrame {
 				//Update ball position
 				x += xSpeed;
 				y += ySpeed;
+
+
 				//Reverse the direction of the ball if it hits the left or right wall
 				if (x < 0 || x > WIDTH - size) {
+					
 					xSpeed = -xSpeed;
 					changeBallColor();
+					if(x<0){
+						countleft++;
+						}
+					else if(x > WIDTH - size){
+							countR++;
+							}
+
 				}
 				//Reverse the direction of the ball if it hits the top or bottom wall
 				if (y < 0 || y > HEIGHT - size) {
 					ySpeed = -ySpeed;
 					changeBallColor();
+						
 				}
 				//Set fixed paddles position
 				leftPaddleY = (getHeight()-40)/2 - leftPaddleHeight/2;
@@ -131,7 +148,10 @@ public class BouncingBall extends JFrame {
 			//Right Paddle
 			int rightPaddleX = getWidth()-paddleWidth;
 			g.fillRect(rightPaddleX, rightPaddleY, paddleWidth, rightPaddleHeight);
-			
+			//counter
+			g.drawString(""+countleft,20,20);
+                       g.drawString(""+countR,20,40);
+
 			//Debug
 			long duration = System.nanoTime() - start;
 			//System.out.println("Paint in : "+ duration+ " nano seconds");
